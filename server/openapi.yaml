@@ -1,0 +1,68 @@
+openapi: '3.0.3'
+info:
+  version: 1.0.0
+  title: Page Speed Insights
+servers:
+  - description: Local server
+    url: 'http://localhost:4000'
+  - description: Google server
+    url: 'https://www.googleapis.com/pagespeedonline'
+
+paths:
+  /v1/runPagespeed:
+    get:
+      summary: Get Page Speed Insights
+      operationId: getPageSpeedInsights
+      x-@id: evolvable:getPageSpeedInsights
+      parameters:
+        - name: url
+          in: query
+          schema:
+            type: string
+            x-@id: evolvable:url
+            format: url
+        - name: filter_third_party_resources
+          in: query
+          schema:
+            type: string
+            x-@id: evolvable:filterThidParty
+        - name: strategy
+          in: query
+          schema:
+            type: string
+            enum: [ 'desktop', 'mobile' ]
+            x-@id: evolvable:strategy
+        - name: key
+          in: query
+          schema:
+            type: string
+            x-@id: evolvable:googleApiKey
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                x-@type: evolvable:PageSpeedInsights
+                properties:
+                  id:
+                    type: string
+                    x-@type: '@id'
+                  kind:
+                    type: string
+                    x-@id: evolvable:kind
+                  title:
+                    type: string
+                    x-@id: evolvable:title
+                  score:
+                    type: string
+                    x-@id: evolvable:speedScore
+                  
+# json-LD context
+x-@context:
+  x-@context: '@context'
+  x-@id: '@id'
+  x-@type: '@type'
+  x-@relation: 'dce:relation'
+  evolvable: 'https://github.com/evolvable-by-design/use-cases/dialog-flow/vocab#'
