@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@evolvable-by-design/pivo": "0.0.2",
+    "@evolvable-by-design/pivo": "0.0.3",
     "axios": "^0.20.0"
   }
 }
