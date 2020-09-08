@@ -4,7 +4,7 @@ info:
   title: Page Speed Insights
 servers:
   - description: Local server
-    url: 'http://localhost:4000'
+    url: 'http://localhost:8000'
   - description: Google server
     url: 'https://www.googleapis.com/pagespeedonline'
 
@@ -65,4 +65,4 @@ x-@context:
   x-@id: '@id'
   x-@type: '@type'
   x-@relation: 'dce:relation'
-  evolvable: 'https://github.com/evolvable-by-design/use-cases/dialog-flow/vocab#'
+  evolvable: 'https://github.com/evolvable-by-design/use-cases/page-speed-insight/vocab#'

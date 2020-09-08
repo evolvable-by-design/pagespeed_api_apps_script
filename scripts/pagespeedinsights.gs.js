@@ -1,6 +1,9 @@
-const axios = require('axios')
+import axios from 'axios'
+import Pivo from '@evolvable-by-design/pivo'
 
-async function pageSpeedInsights(url,device,filter_third_party_resources,http_secure) {
+const BASE_API_URL = 'http://localhost:8000/'
+
+export async function pageSpeedInsights(url,device,filter_third_party_resources,http_secure) {
   
   url = url || 'www.statsravingmad.com';
   const strategy = 'desktop' || device; // 'desktop' or 'mobile'. 
@@ -20,22 +23,26 @@ async function pageSpeedInsights(url,device,filter_third_party_resources,http_se
     }
   
   console.log(http_protocol); // for test runs. comment it out if you like
-  
+
   var key = 'AIzaSyBJW16KnBT_xILW5X6tdyqVB6SoYGkjlQA';     // Get the API key from Google Dev Console
-  var api = 'http://localhost:8000/v1/runPagespeed?url=' + http_protocol + url
-                + '&filter_third_party_resources=' + filter_third_party_resources + '&strategy=' + strategy + '&key=' + key;
-  
-  console.log(api); // for test runs. comment it out if you like
+
+  var documentation = (await axios.options(BASE_API_URL)).data
+  var pivo = new Pivo(documentation)
+  var apiOperation = pivo.get('https://github.com/evolvable-by-design/use-cases/page-speed-insight/vocab#PageSpeedInsights').getOrUndefined()
+   
   console.log(url); // for test runs. comment it out if you like
-  
-  var response = await axios.get(api);
+
+  var response = await apiOperation.invoke({
+    url: http_protocol + url,
+    key,
+    filter_third_party_resources,
+    strategy
+  })
   
   var result = response.data; // yeap, it is JSON
 
-  const score = result.score;
+  const score = await result.getOneValue('https://github.com/evolvable-by-design/use-cases/page-speed-insight/vocab#speedScore')
   console.log(score); // for test runs. comment it out if you like
 
   return(score);
 }
-
-module.exports = pageSpeedInsights

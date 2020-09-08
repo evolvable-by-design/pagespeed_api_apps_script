@@ -1,3 +1,3 @@
-const pageSpeedInsights = require('./scripts/pagespeedinsights.gs')
+import { pageSpeedInsights } from './scripts/pagespeedinsights.gs.js'
 
 pageSpeedInsights('foo.url.com','mobile',false,false)
